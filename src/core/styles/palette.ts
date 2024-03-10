@@ -1,0 +1,18 @@
+export const palette = {
+  BG_COLOR: "#fef6f1",
+  WHITE: "#FFFFFF",
+  BLACK: "#0A0B0D",
+  LIGHT_ORANGE: "#fff2e9",
+  ORANGE: "#ff6f43",
+  ORANGE2: "#c7a289",
+  GREY1: "#6B7888",
+  GREY2: "#E0E0E0",
+  GREY3: "#D1D5DA",
+  GREY4: "#7E8494",
+  GREY5: "#565C69",
+  GREY6: "#fafafa",
+  RED: "#FF0000",
+  BORDER: "#d3d7df",
+  LIGHT_BLUE: "#d5ecfd",
+  BLUE: "#478cbf",
+};
