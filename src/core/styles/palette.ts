@@ -15,4 +15,5 @@ export const palette = {
   BORDER: "#d3d7df",
   LIGHT_BLUE: "#d5ecfd",
   BLUE: "#478cbf",
+  GREEN: '#007D3A',
 };

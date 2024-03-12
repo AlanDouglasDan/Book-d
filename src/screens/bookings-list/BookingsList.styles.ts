@@ -9,37 +9,34 @@ export default StyleSheet.create({
     backgroundColor: palette.BG_COLOR,
   },
   innerContainer: {
+    paddingHorizontal: 24,
     flex: 1,
-    paddingHorizontal: 24
   },
   contentContainer: {
     flexGrow: 1,
     ...ifIphoneX({ paddingBottom: 0 }, { paddingBottom: 30 }),
   },
-  uploadContainer: {
-    borderRadius: 10,
-    backgroundColor: palette.GREY6,
-    height: 100,
-    width: 100,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  bordered: {
-    borderWidth: 1,
-    borderStyle: "dashed",
-    borderColor: palette.BORDER,
-  },
-  text14: {
-    ...typography.text14,
-    color: palette.GREY1,
-  },
-  flexedRow: {
-    flexDirection: "row",
-    gap: 20,
-  },
   header24: {
     ...typography.header20,
     color: palette.ORANGE,
-    marginBottom: 25,
+  },
+  flexedRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // gap: 16,
+  },
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 12,
+    backgroundColor: palette.ORANGE,
+  },
+  semiheader14: {
+    ...typography.semiheader14,
+    color: palette.WHITE,
   },
 });

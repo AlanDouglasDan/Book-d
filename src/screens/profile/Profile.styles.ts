@@ -16,30 +16,34 @@ export default StyleSheet.create({
     flexGrow: 1,
     ...ifIphoneX({ paddingBottom: 0 }, { paddingBottom: 30 }),
   },
-  uploadContainer: {
-    borderRadius: 10,
-    backgroundColor: palette.GREY6,
-    height: 100,
-    width: 100,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  bordered: {
-    borderWidth: 1,
-    borderStyle: "dashed",
-    borderColor: palette.BORDER,
-  },
-  text14: {
-    ...typography.text14,
-    color: palette.GREY1,
-  },
   flexedRow: {
     flexDirection: "row",
-    gap: 20,
+    alignItems: "center",
+    gap: 12,
   },
   header24: {
     ...typography.header20,
     color: palette.ORANGE,
     marginBottom: 25,
+  },
+  iconContainer: {
+    width: 45,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: palette.WHITE,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: palette.GREY2,
+  },
+  text14: {
+    ...typography.text14,
+    color: palette.BLACK,
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: palette.ORANGE,
   },
 });

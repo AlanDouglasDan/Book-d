@@ -4,14 +4,14 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Calendar } from "react-native-calendars";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
-import { BottomTabsNavParams } from "navigation/bottom-tabs-nav/BottomTabsNav";
+import { BookingsStackNavParams } from "navigation/bookings-stack-nav/BookingsStackNav";
 import { Button } from "components/Button";
 import { palette, spacing, common } from "core/styles";
 import styles from "./Bookings.styles";
 
-const Bookings: FC<BottomTabScreenProps<BottomTabsNavParams, "Bookings">> = ({
-  navigation,
-}) => {
+const Bookings: FC<
+  BottomTabScreenProps<BookingsStackNavParams, "Bookings">
+> = ({ navigation }) => {
   const [selected, setSelected] = useState("");
   const [time, setTime] = useState<string>("");
 
@@ -24,8 +24,8 @@ const Bookings: FC<BottomTabScreenProps<BottomTabsNavParams, "Bookings">> = ({
         contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.header24}>Bookings</Text>
-        
+        <Text style={styles.header24}>New Booking</Text>
+
         {/* <Text style={styles.header24}>Book a session</Text> */}
 
         <Calendar

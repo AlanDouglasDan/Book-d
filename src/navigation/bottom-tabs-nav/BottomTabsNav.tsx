@@ -2,16 +2,16 @@ import { FC } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { StatusBar } from "expo-status-bar";
 
 import { Dashboard, Bookings, Profile } from "screens";
+import { BookingsStackNav } from "../bookings-stack-nav";
 import styles from "./BottomTabsNav.styles";
 import { palette } from "@src/core/styles";
 
 export type BottomTabsNavParams = {
   Dashboard: undefined;
-  Bookings: undefined;
-  Profile: undefined;
+  "Bookings Stack": undefined;
+  Notifications: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabsNavParams>();
@@ -29,7 +29,7 @@ const renderTabBarIcon = (name: string, focused: boolean): JSX.Element => {
       color = focused ? palette.ORANGE : palette.GREY5;
       break;
     default:
-      icon = "person";
+      icon = "notifications";
       color = focused ? palette.ORANGE : palette.GREY5;
       break;
   }
@@ -58,8 +58,8 @@ const BottomTabsNav: FC = () => {
         />
 
         <Tab.Screen
-          name="Bookings"
-          component={Bookings}
+          name="Bookings Stack"
+          component={BookingsStackNav}
           options={{
             tabBarIcon: ({ focused }) => renderTabBarIcon("Bookings", focused),
             tabBarLabel: ({ focused }) =>
@@ -69,11 +69,13 @@ const BottomTabsNav: FC = () => {
         />
 
         <Tab.Screen
-          name="Profile"
+          name="Notifications"
           component={Profile}
           options={{
-            tabBarIcon: ({ focused }) => renderTabBarIcon("Profile", focused),
-            tabBarLabel: ({ focused }) => renderTabBarLabel("Profile", focused),
+            tabBarIcon: ({ focused }) =>
+              renderTabBarIcon("Notifications", focused),
+            tabBarLabel: ({ focused }) =>
+              renderTabBarLabel("Notifications", focused),
             headerShown: false,
           }}
         />
