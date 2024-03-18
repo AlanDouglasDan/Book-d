@@ -10,69 +10,72 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Formik } from "formik";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-// import { useAuth } from "store/auth/hooks";
+import { useAuth } from "store/auth/hooks";
 import { AuthStackNavParams } from "navigation/auth-stack/AuthStackNav";
 import { palette, spacing } from "core/styles";
 import { Input } from "components/Input";
 import { PasswordInput } from "components/PasswordInput";
 import { Button } from "components/Button";
-// import { ErrorModal } from "components/ErrorModal";
+import { ErrorModal } from "components/ErrorModal";
 import { images } from "core/images";
 import * as yup from "yup";
 import styles from "./SignUp.styles";
 
 interface FormValues {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
   email: string;
   password: string;
+  businessName: string;
+  address: string;
 }
 
 const initialValues: FormValues = {
-  first_name: "",
-  last_name: "",
-  phone_number: "",
+  firstName: "",
+  lastName: "",
+  phone: "",
   email: "",
   password: "",
+  businessName: "",
+  address: "",
 };
 
 const invalidNameMessage = "Name should be in letters between 3-30 characters";
 
 const validationSchema = yup.object({
-  first_name: yup
+  firstName: yup
     .string()
     .required("Required")
     .matches(/^[aA-zZ\s]+$/, invalidNameMessage)
     .min(3, invalidNameMessage)
     .max(30, invalidNameMessage),
-  last_name: yup
+  lastName: yup
     .string()
     .required("Required")
     .matches(/^[aA-zZ\s]+$/, invalidNameMessage)
     .min(3, invalidNameMessage)
     .max(30, invalidNameMessage),
-  phone_number: yup.string().required("Required"),
+  phone: yup.string().required("Required"),
   email: yup.string().required("Required").email("Email address is invalid"),
   password: yup.string().required("Required"),
+  businessName: yup.string().required("Required"),
+  address: yup.string().required("Required"),
 });
 
 const SignUp: FC<NativeStackScreenProps<AuthStackNavParams, "Sign Up">> = ({
   navigation,
 }) => {
-  // const { signUp, loading, error, setError } = useAuth();
+  const { signUp, loading, error, setError } = useAuth();
 
   const onSubmit = async (values: FormValues) => {
-    // const { email, phone_number } = values;
+    const { email, ...rest } = values;
 
-    // const res = await signUp({
-    //   ...values,
-    //   email: email.toLocaleLowerCase(),
-    //   phone_number: `+234${phone_number}`,
-    // });
-    // if (res && !res.error)
-    //   navigation.navigate("Email Verification", { email: values.email });
-    console.log(values);
+    const res = await signUp({
+      ...rest,
+      email: email.toLocaleLowerCase(),
+    });
+    if (res && !res.error) navigation.navigate("Login");
   };
 
   return (
@@ -115,31 +118,31 @@ const SignUp: FC<NativeStackScreenProps<AuthStackNavParams, "Sign Up">> = ({
 
             return (
               <>
-                <View style={[styles.nameRow, spacing.marginTop28]}>
+                <View style={[styles.nameRow, spacing.marginTop16]}>
                   <Input
                     placeholder="First name"
-                    value={values.first_name}
-                    onChangeText={(text) => setFieldValue("first_name", text)}
+                    value={values.firstName}
+                    onChangeText={(text) => setFieldValue("firstName", text)}
                     containerStyle={styles.nameFields}
                     error={
-                      touched.first_name && errors.first_name
-                        ? errors.first_name
+                      touched.firstName && errors.firstName
+                        ? errors.firstName
                         : undefined
                     }
-                    onBlur={() => setFieldTouched("first_name")}
+                    onBlur={() => setFieldTouched("firstName")}
                   />
 
                   <Input
                     placeholder="Last name"
-                    value={values.last_name}
-                    onChangeText={(text) => setFieldValue("last_name", text)}
+                    value={values.lastName}
+                    onChangeText={(text) => setFieldValue("lastName", text)}
                     containerStyle={styles.nameFields}
                     error={
-                      touched.last_name && errors.last_name
-                        ? errors.last_name
+                      touched.lastName && errors.lastName
+                        ? errors.lastName
                         : undefined
                     }
-                    onBlur={() => setFieldTouched("last_name")}
+                    onBlur={() => setFieldTouched("lastName")}
                   />
                 </View>
 
@@ -159,15 +162,41 @@ const SignUp: FC<NativeStackScreenProps<AuthStackNavParams, "Sign Up">> = ({
 
                 <Input
                   placeholder="Phone number"
-                  value={values.phone_number}
-                  onChangeText={(text) => setFieldValue("phone_number", text)}
+                  value={values.phone}
+                  onChangeText={(text) => setFieldValue("phone", text)}
                   containerStyle={spacing.marginTop20}
                   error={
-                    touched.phone_number && errors.phone_number
-                      ? errors.phone_number
+                    touched.phone && errors.phone
+                      ? errors.phone
                       : undefined
                   }
-                  onBlur={() => setFieldTouched("phone_number")}
+                  onBlur={() => setFieldTouched("phone")}
+                />
+
+                <Input
+                  placeholder="Business name"
+                  value={values.businessName}
+                  onChangeText={(text) => setFieldValue("businessName", text)}
+                  containerStyle={spacing.marginTop20}
+                  error={
+                    touched.businessName && errors.businessName
+                      ? errors.businessName
+                      : undefined
+                  }
+                  onBlur={() => setFieldTouched("businessName")}
+                />
+
+                <Input
+                  placeholder="Address"
+                  value={values.address}
+                  onChangeText={(text) => setFieldValue("address", text)}
+                  containerStyle={spacing.marginTop20}
+                  error={
+                    touched.address && errors.address
+                      ? errors.address
+                      : undefined
+                  }
+                  onBlur={() => setFieldTouched("address")}
                 />
 
                 <PasswordInput
@@ -187,8 +216,8 @@ const SignUp: FC<NativeStackScreenProps<AuthStackNavParams, "Sign Up">> = ({
                   title="Sign Up"
                   onPress={() => handleSubmit()}
                   style={spacing.marginTop28}
-                  // loading={loading}
-                  // disabled={loading}
+                  loading={loading}
+                  disabled={loading}
                 />
               </>
             );
@@ -203,13 +232,13 @@ const SignUp: FC<NativeStackScreenProps<AuthStackNavParams, "Sign Up">> = ({
         </View>
       </KeyboardAwareScrollView>
 
-      {/* <ErrorModal
+      <ErrorModal
         open={!!error}
         onClose={() => setError(false)}
         message={
           typeof error === "string" ? error : "Oops, something went wrong!"
         }
-      /> */}
+      />
     </SafeAreaView>
   );
 };

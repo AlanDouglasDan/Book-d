@@ -39,4 +39,14 @@ export default StyleSheet.create({
     ...typography.semiheader14,
     color: palette.WHITE,
   },
+  header18: {
+    ...typography.header18,
+    color: palette.RED,
+    textAlign: "center",
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "90%",
+  },
 });

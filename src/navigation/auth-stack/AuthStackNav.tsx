@@ -18,11 +18,11 @@ const Stack = createNativeStackNavigator<AuthStackNavParams>();
 const AuthStackNav: FC = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Bottom Tabs"
         component={BottomTabsNav}
         options={{ headerShown: false, gestureEnabled: false }}
-      />
+      /> */}
 
       <Stack.Screen
         name="Login"
@@ -39,11 +39,11 @@ const AuthStackNav: FC = () => {
         })}
       />
 
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Bottom Tabs"
         component={BottomTabsNav}
         options={{ headerShown: false, gestureEnabled: false }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };

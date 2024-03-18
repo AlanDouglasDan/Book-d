@@ -40,6 +40,6 @@ export default StyleSheet.create({
   header24: {
     ...typography.header20,
     color: palette.ORANGE,
-    marginBottom: 25,
+    marginBottom: 16,
   },
 });

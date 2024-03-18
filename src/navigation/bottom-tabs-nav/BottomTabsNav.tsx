@@ -63,7 +63,7 @@ const BottomTabsNav: FC = () => {
           options={{
             tabBarIcon: ({ focused }) => renderTabBarIcon("Bookings", focused),
             tabBarLabel: ({ focused }) =>
-              renderTabBarLabel("Bookings", focused),
+              renderTabBarLabel("Availability", focused),
             headerShown: false,
           }}
         />

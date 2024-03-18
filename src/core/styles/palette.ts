@@ -16,4 +16,8 @@ export const palette = {
   LIGHT_BLUE: "#d5ecfd",
   BLUE: "#478cbf",
   GREEN: '#007D3A',
+  SUCCESS_25: "#F6FEF9",
+  SUCCESS_300: "#6CE9A6",
+  SUCCESS_600: "#039855",
+  SUCCESS_700: "#027A48",
 };

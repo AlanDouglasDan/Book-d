@@ -1,1 +1,1 @@
-export const API_URL = "https://qa.coauth.app";
+export const API_URL = "https://book-d-api.onrender.com/v1";

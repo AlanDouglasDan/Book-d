@@ -10,7 +10,7 @@ export default StyleSheet.create({
     backgroundColor: palette.BG_COLOR,
   },
   innerContainer: {
-    paddingHorizontal: "6%",
+    paddingHorizontal: 24,
     flex: 1,
   },
   contentContainer: {

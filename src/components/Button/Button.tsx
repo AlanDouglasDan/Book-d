@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp, ViewStyle, TextStyle } from "react-native";
 import { Button as Btn } from "@rneui/base";
 
 import styles from "./Button.styles";
@@ -10,8 +10,10 @@ interface ButtonProps {
   opaque?: boolean;
   disabled?: boolean;
   loading?: boolean;
-  onPress?: () => void;
+  onPress: () => void;
   style?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -21,16 +23,33 @@ const Button: FC<ButtonProps> = ({
   style,
   disabled = false,
   loading = false,
+  textStyle,
+  containerStyle,
 }) => (
   <Btn
     title={title}
-    titleStyle={[styles.textButton, opaque && { color: palette.WHITE }]}
-    containerStyle={[styles.buttonContainer, style]}
-    buttonStyle={[styles.button, opaque && { backgroundColor: palette.ORANGE }]}
-    onPress={onPress}
-    disabled={disabled}
+    titleStyle={[
+      styles.textButton,
+      opaque && { color: palette.WHITE },
+      textStyle,
+    ]}
+    containerStyle={[
+      styles.buttonContainer,
+      style,
+      disabled && { borderWidth: 0 },
+    ]}
+    buttonStyle={[
+      styles.button,
+      opaque && { backgroundColor: palette.ORANGE },
+      disabled && { backgroundColor: palette.ORANGE2 },
+      containerStyle,
+    ]}
+    onPress={() => !disabled && onPress()}
+    // disabled={disabled}
     loading={loading}
-    disabledStyle={{ backgroundColor: "#333" }}
+    // disabledStyle={{
+    //   backgroundColor: palette.ORANGE2,
+    // }}
   />
 );
 

@@ -30,7 +30,7 @@ export default StyleSheet.create({
     borderColor: palette.RED
   },
   disabled: {
-    // backgroundColor: palette.SECONDARY_50
+    backgroundColor: palette.GREY2
   },
   label: {
     ...typography.text16,

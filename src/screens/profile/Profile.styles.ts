@@ -19,7 +19,7 @@ export default StyleSheet.create({
   flexedRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 8,
   },
   header24: {
     ...typography.header20,
@@ -40,10 +40,24 @@ export default StyleSheet.create({
     ...typography.text14,
     color: palette.BLACK,
   },
+  text12: {
+    ...typography.text12,
+    color: palette.GREY1,
+  },
   dot: {
     width: 10,
     height: 10,
     borderRadius: 5,
     backgroundColor: palette.ORANGE,
+  },
+  header18: {
+    ...typography.header18,
+    color: palette.RED,
+    textAlign: "center",
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "90%",
   },
 });

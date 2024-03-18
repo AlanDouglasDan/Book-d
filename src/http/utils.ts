@@ -16,7 +16,7 @@ export const isNetWorkError = (error: AxiosError): boolean =>
 
 export const getErrorMessage = (error: RequestError): string | undefined => {
   if (error && error.response) {
-    return (error.response as any)?.data?.error;
+    return (error.response as any)?.data?.message;
   }
 
   if (error.reason) return error.reason?.message;

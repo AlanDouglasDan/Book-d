@@ -12,13 +12,13 @@ import * as yup from "yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-// import { useAuth } from "store/auth/hooks";
+import { useAuth } from "store/auth/hooks";
 import { AuthStackNavParams } from "navigation/auth-stack/AuthStackNav";
 import { palette, spacing } from "core/styles";
 import { Input } from "components/Input";
 import { PasswordInput } from "components/PasswordInput";
 import { Button } from "components/Button";
-// import { ErrorModal } from "components/ErrorModal";
+import { ErrorModal } from "components/ErrorModal";
 import { images } from "core/images";
 import styles from "./Login.styles";
 
@@ -40,21 +40,19 @@ const validationSchema = yup.object({
 const Login: FC<NativeStackScreenProps<AuthStackNavParams, "Login">> = ({
   navigation,
 }) => {
-  // const { login, loading, error, setError } = useAuth();
+  const { logIn, loading, error, setError } = useAuth();
 
   useEffect(() => {
     AsyncStorage.getItem("expoPushToken").then((res) => console.log(res));
   }, []);
 
   const onSubmit = async (values: FormValues) => {
-    // const { email, password } = values;
+    const { email, ...rest } = values;
 
-    // const res = await login({
-    //   ...values,
-    //   email: email.toLocaleLowerCase(),
-    // });
-    console.log(values);
-    navigation.navigate("Bottom Tabs");
+    await logIn({
+      ...rest,
+      email: email.toLocaleLowerCase(),
+    });
   };
 
   return (
@@ -122,8 +120,8 @@ const Login: FC<NativeStackScreenProps<AuthStackNavParams, "Login">> = ({
                   title="Login"
                   onPress={() => handleSubmit()}
                   style={spacing.marginTop28}
-                  // loading={loading}
-                  // disabled={loading}
+                  loading={loading}
+                  disabled={loading}
                 />
               </>
             );
@@ -138,13 +136,13 @@ const Login: FC<NativeStackScreenProps<AuthStackNavParams, "Login">> = ({
         </View>
       </KeyboardAwareScrollView>
 
-      {/* <ErrorModal
+      <ErrorModal
         open={!!error}
         onClose={() => setError(false)}
         message={
           typeof error === "string" ? error : "Oops, something went wrong!"
         }
-      /> */}
+      />
     </SafeAreaView>
   );
 };

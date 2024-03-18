@@ -4,18 +4,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
+import { Asset } from "expo-asset";
+import { Provider } from "react-redux";
 import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { navigate } from "navigation/utils";
 
 import { AppNav } from "navigation";
-import { navigationRef } from "navigation/utils";
-
+import { navigationRef, navigate } from "navigation/utils";
 import interceptors from "http/interceptors";
-import { Asset } from "expo-asset";
 import { images } from "core/images";
 import { customFonts, registerForPushNotificationsAsync } from "core/utils";
-import { Provider } from "react-redux";
 import { store } from "store/index";
 
 export interface Subscription {

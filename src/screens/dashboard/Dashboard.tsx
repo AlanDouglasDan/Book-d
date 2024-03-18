@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -14,52 +14,69 @@ import * as ImagePicker from "expo-image-picker";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 import { BottomTabsNavParams } from "navigation/bottom-tabs-nav/BottomTabsNav";
+import { useAuth } from "store/auth/hooks";
+import { useUser } from "store/user/hooks";
+import { ErrorModal } from "components/ErrorModal";
+import { SuccessModal } from "components/SuccessModal";
 import { Input } from "components/Input";
 import { Button } from "components/Button";
-import { spacing, palette, common } from "core/styles";
-// import {images} from 'core/images';
+import { spacing, palette } from "core/styles";
 import styles from "./Dashboard.styles";
 
 interface FormValues {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  businessName: string;
+  address: string;
   email: string;
 }
 
 const initialValues: FormValues = {
-  first_name: "",
-  last_name: "",
-  phone_number: "",
+  firstName: "",
+  lastName: "",
+  phone: "",
+  businessName: "",
+  address: "",
   email: "",
 };
 
 const invalidNameMessage = "Name should be in letters between 3-30 characters";
 
 const validationSchema = yup.object({
-  first_name: yup
+  firstName: yup
     .string()
     .required("Required")
     .matches(/^[aA-zZ\s]+$/, invalidNameMessage)
     .min(3, invalidNameMessage)
     .max(30, invalidNameMessage),
-  last_name: yup
+  lastName: yup
     .string()
     .required("Required")
     .matches(/^[aA-zZ\s]+$/, invalidNameMessage)
     .min(3, invalidNameMessage)
     .max(30, invalidNameMessage),
-  phone_number: yup.string().required("Required"),
+  phone: yup.string().required("Required"),
+  businessName: yup.string().required("Required"),
+  address: yup.string().required("Required"),
   email: yup.string().required("Required").email("Email address is invalid"),
 });
 
 const Dashboard: FC<BottomTabScreenProps<BottomTabsNavParams, "Dashboard">> = ({
   navigation,
 }) => {
+  const { current } = useAuth();
+  const { updateUser, loading, error, setError } = useUser();
+
   const [media, setMedia] = useState<ImagePicker.ImagePickerAsset>();
+  const [open, setOpen] = useState<boolean>(false);
 
   const onSubmit = async (values: FormValues) => {
-    console.log(values);
+    const res = await updateUser(values);
+
+    if (res && !res.error) {
+      setOpen(true);
+    }
   };
 
   const pickImage = async () => {
@@ -104,15 +121,16 @@ const Dashboard: FC<BottomTabScreenProps<BottomTabsNavParams, "Dashboard">> = ({
             setFieldTouched,
             handleSubmit,
           }) => {
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            // useEffect(() => {
-            //   if (current) {
-            //     setFieldValue("first_name", current?.first_name);
-            //     setFieldValue("last_name", current?.last_name);
-            //     setFieldValue("email", current?.email);
-            //     setFieldValue("phone_number", current.phone_number);
-            //   }
-            // }, [setFieldValue]);
+            useEffect(() => {
+              if (current) {
+                setFieldValue("firstName", current.firstName);
+                setFieldValue("lastName", current.lastName);
+                setFieldValue("email", current.email);
+                setFieldValue("phone", current.phone);
+                setFieldValue("businessName", current.businessName);
+                setFieldValue("address", current.address);
+              }
+            }, [setFieldValue]);
 
             return (
               <>
@@ -139,65 +157,109 @@ const Dashboard: FC<BottomTabScreenProps<BottomTabsNavParams, "Dashboard">> = ({
 
                 <Input
                   placeholder="First name"
-                  value={values.first_name}
-                  onChangeText={(text) => setFieldValue("first_name", text)}
+                  value={values.firstName}
+                  onChangeText={(text) => setFieldValue("firstName", text)}
                   containerStyle={spacing.marginTop28}
                   error={
-                    touched.first_name && errors.first_name
-                      ? errors.first_name
+                    touched.firstName && errors.firstName
+                      ? errors.firstName
                       : undefined
                   }
-                  onBlur={() => setFieldTouched("first_name")}
+                  onBlur={() => setFieldTouched("firstName")}
                 />
 
                 <Input
                   placeholder="Last name"
-                  value={values.last_name}
-                  onChangeText={(text) => setFieldValue("last_name", text)}
-                  containerStyle={spacing.marginTop28}
+                  value={values.lastName}
+                  onChangeText={(text) => setFieldValue("lastName", text)}
+                  containerStyle={spacing.marginTop20}
                   error={
-                    touched.last_name && errors.last_name
-                      ? errors.last_name
+                    touched.lastName && errors.lastName
+                      ? errors.lastName
                       : undefined
                   }
-                  onBlur={() => setFieldTouched("last_name")}
+                  onBlur={() => setFieldTouched("lastName")}
                 />
 
                 <Input
                   placeholder="Email"
                   value={values.email}
                   onChangeText={(text) => setFieldValue("email", text)}
-                  containerStyle={spacing.marginTop28}
+                  containerStyle={spacing.marginTop20}
                   error={
                     touched.email && errors.email ? errors.email : undefined
                   }
                   onBlur={() => setFieldTouched("email")}
                   keyboardType="email-address"
+                  disabled
                 />
 
                 <Input
-                  value={values.phone_number}
-                  onChangeText={(text) => setFieldValue("phone_number", text)}
-                  containerStyle={spacing.marginTop28}
+                  value={values.phone}
+                  onChangeText={(text) => setFieldValue("phone", text)}
+                  containerStyle={spacing.marginTop20}
                   error={
-                    touched.phone_number && errors.phone_number
-                      ? errors.phone_number
+                    touched.phone && errors.phone ? errors.phone : undefined
+                  }
+                  onBlur={() => setFieldTouched("phone")}
+                  placeholder="Phone No"
+                  disabled
+                />
+
+                <Input
+                  value={values.businessName}
+                  onChangeText={(text) => setFieldValue("businessName", text)}
+                  containerStyle={spacing.marginTop20}
+                  error={
+                    touched.businessName && errors.businessName
+                      ? errors.businessName
                       : undefined
                   }
-                  onBlur={() => setFieldTouched("phone_number")}
-                  placeholder="Phone No"
+                  onBlur={() => setFieldTouched("businessName")}
+                  placeholder="Business Name"
+                />
+
+                <Input
+                  value={values.address}
+                  onChangeText={(text) => setFieldValue("address", text)}
+                  containerStyle={spacing.marginTop20}
+                  error={
+                    touched.address && errors.address
+                      ? errors.address
+                      : undefined
+                  }
+                  onBlur={() => setFieldTouched("address")}
+                  placeholder="Address"
                 />
 
                 <Button
                   title="Save Changes"
                   onPress={handleSubmit}
                   style={spacing.marginTop28}
+                  loading={loading}
+                  disabled={loading}
                 />
               </>
             );
           }}
         </Formik>
       </KeyboardAwareScrollView>
+
+      <ErrorModal
+        open={!!error}
+        onClose={() => setError(false)}
+        message={
+          typeof error === "string" ? error : "Oops, something went wrong!"
+        }
+      />
+
+      <SuccessModal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+        message="Profile Updated Successfully"
+      />
     </SafeAreaView>
   );
 };

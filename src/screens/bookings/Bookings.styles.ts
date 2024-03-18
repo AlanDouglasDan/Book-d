@@ -24,11 +24,11 @@ export default StyleSheet.create({
   text14: {
     ...typography.text14,
     color: palette.GREY1,
-    textAlign: "center",
   },
   flexedRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   optionContainer: {
     backgroundColor: palette.WHITE,
@@ -43,6 +43,18 @@ export default StyleSheet.create({
   },
   text12: {
     ...typography.text12,
+    color: palette.GREY1,
+  },
+  input: {
+    paddingVertical: 12,
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: palette.BORDER,
+    borderRadius: 12,
+    paddingLeft: 12,
+  },
+  semiheader16: {
+    ...typography.semiheader16,
     color: palette.GREY1,
   },
 });

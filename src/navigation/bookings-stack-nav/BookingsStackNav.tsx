@@ -1,11 +1,17 @@
 import React, { FC } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { Bookings, BookingsList } from "screens";
+import { Bookings, BookingsList, BookingDetails } from "screens";
 
 export type BookingsStackNavParams = {
-  Bookings: undefined;
+  Bookings: {
+    date?: string;
+    startTime?: string;
+    endTime?: string;
+    id?: string;
+  };
   "Bookings List": undefined;
+  "Booking Details": { bookingDetails: any };
 };
 
 const Stack = createNativeStackNavigator<BookingsStackNavParams>();
@@ -24,6 +30,14 @@ const BookingsStackNav: FC = () => {
       <Stack.Screen
         name="Bookings"
         component={Bookings}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="Booking Details"
+        component={BookingDetails}
         options={{
           headerShown: false,
         }}

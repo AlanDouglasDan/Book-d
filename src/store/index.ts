@@ -22,7 +22,7 @@ const configureAppStore = (
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(devMiddlewares),
     preloadedState,
-    // enhancers: [],
+    enhancers: [],
     devTools: __DEV__,
   });
 

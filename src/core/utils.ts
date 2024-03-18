@@ -37,6 +37,23 @@ export const formatCurrency = (number, fixed = 0) => {
         .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 };
 
+export const extractDate = (time: string) => {
+  let hours = parseInt(time.slice(0, 2)); // Extract hours (08)
+  const minutes = parseInt(time.slice(3, 5)); // Extract minutes (00)
+  const isAM = time.slice(-2) === "AM"; // Check for AM/PM
+
+  const currentDate = new Date();
+
+  // Adjust hours for PM
+  if (!isAM && hours !== 12) {
+    hours += 12; // Add 12 for hours in PM format
+  }
+
+  currentDate.setHours(hours, minutes, 0, 0); // Set hours, minutes, seconds, milliseconds
+
+  return currentDate;
+};
+
 export const trimStringWithEllipsis = (
   inputString: string,
   charLimit: number | undefined = 20
@@ -49,22 +66,22 @@ export const trimStringWithEllipsis = (
   return trimmedString + "...";
 };
 
-export const formatDate = (date, timeFirst = false) => {
+export const formatDate = (date, noTime = false) => {
   const inputDate = new Date(date);
 
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const day = inputDate.getDate();
@@ -77,8 +94,8 @@ export const formatDate = (date, timeFirst = false) => {
   const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
   const formattedMinutes = minutes.toString().padStart(2, "0");
 
-  const formattedDate = timeFirst
-    ? `${formattedHours}:${formattedMinutes} ${amPm}, ${month} ${day}, ${year}`
+  const formattedDate = noTime
+    ? `${month} ${day}, ${year}`
     : `${day} ${month} ${year}, ${formattedHours}:${formattedMinutes} ${amPm}`;
   return formattedDate;
 };
@@ -119,6 +136,35 @@ export const registerForPushNotificationsAsync = async () => {
   // }
 
   return token.data;
+};
+
+export const timeDifference = (dateStr: string | number | Date) => {
+  // Parse the date string into a Date object
+  const date = new Date(dateStr);
+
+  // Calculate the time difference in milliseconds
+  const timeDiff = Math.abs(date.getTime() - Date.now());
+
+  // Define units and their corresponding thresholds in milliseconds
+  const units: [string, number][] = [
+    ["y", 365 * 24 * 60 * 60 * 1000],
+    ["m", 30 * 24 * 60 * 60 * 1000],
+    ["d", 24 * 60 * 60 * 1000],
+    ["h", 60 * 60 * 1000],
+    ["min", 60 * 1000],
+    ["", 1000],
+  ];
+
+  // Find the most suitable unit
+  for (const [unit, threshold] of units) {
+    if (timeDiff >= threshold) {
+      const numUnits = Math.floor(timeDiff / threshold);
+      return `${numUnits} ${unit} ago`;
+    }
+  }
+
+  // If no suitable unit is found, return "just now"
+  return "just now";
 };
 
 export const getApplicationVersion = () => {

@@ -5,7 +5,7 @@ import { palette, typography } from "core/styles";
 export default StyleSheet.create({
   textButton: {
     ...typography.semiheader16,
-    color: palette.BLACK,
+    color: palette.ORANGE,
   },
   buttonContainer: {
     borderRadius: 40,
@@ -15,7 +15,6 @@ export default StyleSheet.create({
   button: {
     paddingVertical: 12,
     backgroundColor: palette.WHITE,
-    padding: 15,
     width: "100%",
   },
 });
