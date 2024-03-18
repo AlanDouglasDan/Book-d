@@ -35,7 +35,7 @@ const authStore = createSlice({
     });
 
     builder.addMatcher(isAnyOf(signUp.fulfilled), (state) => {
-      state.loading = true;
+      state.loading = false;
     });
 
     builder.addMatcher(isAnyOf(signUp.pending, logIn.pending), (state) => {

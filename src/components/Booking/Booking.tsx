@@ -17,8 +17,6 @@ interface BookingProps {
 }
 
 const Booking: FC<BookingProps> = ({ booking, navigation }) => {
-  const [open, setOpen] = useState<boolean>(false);
-
   return (
     <View style={{ position: "relative" }}>
       <TouchableOpacity
@@ -35,8 +33,6 @@ const Booking: FC<BookingProps> = ({ booking, navigation }) => {
         }
       >
         <View style={styles.flexedRow}>
-          {/* {transaction?.type === "inward" ? <Inward /> : <Outward />} */}
-
           <View style={styles.gap}>
             <Text style={styles.header14}>{booking?.date}</Text>
             <Text style={[styles.text12, { color: palette.GREEN }]}>
@@ -54,20 +50,6 @@ const Booking: FC<BookingProps> = ({ booking, navigation }) => {
           </Text>
         </View>
       </TouchableOpacity>
-
-      {/* {open && (
-        <View style={[styles.dropdownContainer, common.shadow]}>
-          <TouchableOpacity>
-            <Text style={[styles.text14]}>Update</Text>
-          </TouchableOpacity>
-
-          <View style={styles.line} />
-
-          <TouchableOpacity>
-            <Text style={[styles.text14, { color: palette.RED }]}>Delete</Text>
-          </TouchableOpacity>
-        </View>
-      )} */}
     </View>
   );
 };

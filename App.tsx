@@ -10,15 +10,11 @@ import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AppNav } from "navigation";
-import { navigationRef, navigate } from "navigation/utils";
+import { navigationRef } from "navigation/utils";
 import interceptors from "http/interceptors";
 import { images } from "core/images";
 import { customFonts, registerForPushNotificationsAsync } from "core/utils";
 import { store } from "store/index";
-
-export interface Subscription {
-  remove: () => void;
-}
 
 interceptors.setup(store);
 
@@ -49,17 +45,13 @@ const App: FC = () => {
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
-        navigate("Authorization", {
-          notificationData: notification.request.content.data,
-        });
+        console.log(notification);
       });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        navigate("Authorization", {
-          notificationData: response.notification.request.content.data,
-        });
+        console.log(response);
       });
 
     return () => {
